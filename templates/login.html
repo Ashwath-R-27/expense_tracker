@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <div class="header">
+        <h2>EXPENSE TRACKER</h2>
+    </div>
+    <div class="box">
+        <div class="container">
+            <form action="\verify">
+                <h3>LOGIN</h3>
+                <div class="input-box">
+                    <label for="un">Email:</label><br>
+                    <input type="email" placeholder="Enter email" name="un" required>
+                </div>
+                <div class="input-box">
+                    <label for="pwd">Password:</label><br>
+                    <input type="password" placeholder="Enter Password" name="pwd" required>
+                </div>
+                <div class="fgt-pas">
+                    <a href="#"><b>Forget Password?</b></a>
+                </div>
+                <div class="reg-box">
+                    <h5>Don't have an account ? <a href="#">Register</a></h5>
+                </div>
+                <div class="btn">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
