@@ -1,0 +1,160 @@
+*{
+    --color--log: #a41bff;
+    --color-txt: #2b2525;
+    --color-entrylbl: #0c4620;
+}
+
+body{
+    background-color: rgb(247, 251, 255);
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.header {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: var(--color--log);
+    color: white;
+    padding: 5px;
+}
+
+.header h2 {
+    padding-left: 3%;
+    font-weight: bold;
+}
+
+.box {
+    padding: 5%;
+}
+
+.container {
+    margin: 3vh 0;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid var(--color-txt);
+    background-color: #f3f3f3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+    border-radius: 10px;
+    width: 50%;
+    padding: 0 2%;
+}
+
+.container h3 {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    color: var(--color-txt);
+    font-size: 25px;
+}
+
+.input-box{
+    margin: 10px 0;
+}
+
+.input-box label {
+    font-weight: bold;
+    color: var(--color-txt);
+}
+
+.input-box input {
+    margin: 10px 0;
+    height: 30px;
+    font-size: 17px;
+    padding-left: 2%;
+    width: 95%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.input-box input:focus{
+    outline: 0;
+    border-bottom: 1px solid var(--color--log);
+}
+
+.btn {
+    padding: 2%;
+    text-align: center;
+}
+
+.fgt-pas{
+    text-align: right;
+    padding-right: 1%;
+}
+
+.fgt-pas a{
+    text-decoration: none;
+    color: blue;
+    font-size: 13px;
+}
+
+.fgt-pas a:hover{
+    text-decoration: underline;
+}
+
+.reg-box{
+    padding-left: 1%;
+}
+
+.reg-box h5 {
+    font-size: 13px;
+}
+
+.reg-box h5 a {
+    text-decoration: none;
+    color: blue;
+}
+
+.reg-box h5 a:hover {
+    text-decoration: underline;
+}
+
+.btn{
+    margin-bottom: 5%;
+}
+
+.btn button {
+    width: 100%;
+    font-size: 17px;
+    height: 40px;
+    background-color: var(--color--log);
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
+}
+
+.btn button:hover {
+    transition: 0.1s;
+    background-color: rgb(18, 107, 107);
+    box-shadow: -3px -3px 3px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: -3px -3px 3px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -3px -3px 3px 0px rgba(0,0,0,0.75);
+}
+
+@media screen and (max-width: 700px){
+    .container{
+        width: 95%;
+    }
+
+    .entcon {
+        width: 95%;
+    }
+
+    .input-box input{
+        font-size: 13px;
+    }
+
+    .amt-input table {
+        width: 65%;
+    }
+
+    .sedte input{
+        font-size: 13px;
+    }
+
+    .btn button {
+        font-size: 13px;
+    }
+}
