@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='statement.css') }}">
+    <title>Statement</title>
+</head>
+<body>
+    <div class="header">
+        <h2>EXPENSE TRACKER</h2>
+    </div>
+    <div class="content">
+        <div class="st_table">
+            <table>
+                <thead>
+                    <tr style="height: 50px;">
+                        <th>DATE</th>
+                        <th>ITEM</th>
+                        <th>SHOP NAME</th>
+                        <th>CATEGORY</th>
+                        <th>MODE OF PAYMENT</th>
+                        <th>AMOUNT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in result %}
+                    <tr>
+                        <td>{{ i[0] }}</td>
+                        <td>{{ i[1] }}</td>
+                        <td>{{ i[2] }}</td>
+                        <td>{{ i[3] }}</td>
+                        <td>{{ i[4] }}</td>
+                        <td>₹ {{ i[5] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
