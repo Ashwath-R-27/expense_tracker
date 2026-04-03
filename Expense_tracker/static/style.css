@@ -141,6 +141,19 @@ body{
 }
 
 @media screen and (max-width: 700px){
+
+    .container h3 {
+        font-size: 17px;
+    }
+
+    label {
+        font-size: 13px;
+    }
+
+    .header h2 {
+        font-size: 12px;
+    }
+
     .container{
         width: 95%;
     }

@@ -2,6 +2,9 @@
     --color--log: #a41bff;
     --color-txt: #2b2525;
     --color-entrylbl: #0c4620;
+    --row-even: #f2f2ff;
+    --row-odd: #ffffff;
+    --table-header: rgb(58, 48, 192);
 }
 
 body{
@@ -46,15 +49,91 @@ body{
     width: 100%;
 }
 
-.st_table table, .st_table td,.st_table table th {
+.st_table table, .st_table td{
     border: 1px solid gray;
     border-collapse: collapse;
     height: 25px;
     font-size: 14px;
+    color: rgb(48, 48, 48);
     text-align: center;
     font-weight: bold;
 }
 
 .st_table table th {
     font-size: 15px;
+}
+
+.st_table tbody tr:nth-child(even) {
+    background-color: var(--row-even);
+}
+
+.st_table tbody tr:nth-child(odd) {
+    background-color: var(--row-odd);
+}
+
+.table-header table,
+.table-body table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* KEY for alignment */
+}
+
+.table-header{
+    padding-right: 1.2%;
+    background-color: var(--table-header);
+}
+
+.table-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+td {
+    border: 1px solid gray;
+    text-align: center;
+    padding: 5px;
+}
+
+th {
+    border: 1px solid var(--table-header);
+    padding: 5px;
+}
+
+/* Optional header style */
+.table-header th {
+    background-color: var(--table-header);
+    color: white;
+}
+
+.table-body table tr:last-child{
+    height: 50px;
+}
+
+.table-body table tr:last-child td {
+    text-align: right;
+    padding-right: 25px;
+    font-size: 17px;
+}
+
+.table-body table tr:last-child td:last-child{
+    text-align: center;
+}
+
+@media screen and (max-width: 850px){
+
+    .header h2 {
+        font-size: 12px;
+    }
+
+    .st_table table td {
+        font-size: 8px;
+    }
+
+    .st_table table th {
+        font-size: 9px;
+    }
+
+    .table-body table tr:last-child td{
+        font-size: 10px;
+    }
 }

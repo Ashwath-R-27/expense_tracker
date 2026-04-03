@@ -279,8 +279,20 @@ body{
 
 @media screen and (max-width: 700px){
 
+    label {
+        font-size: 13px;
+    }
+
+    .header h2 {
+        font-size: 12px;
+    }
+    
     .entcon {
         width: 95%;
+    }
+
+    .expense-head h3 {
+        font-size: 16px;
     }
 
     .input-box input{
@@ -292,6 +304,10 @@ body{
     }
 
     .sedte input{
+        font-size: 13px;
+    }
+
+    .add-btn button {
         font-size: 13px;
     }
 

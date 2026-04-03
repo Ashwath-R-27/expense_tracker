@@ -40,7 +40,7 @@ def entrypg():
 def statement():
     con=get_db()
     cursor=con.cursor()
-    cursor.execute("SELECT DATE_FORMAT(date, '%d/%m/%Y') AS date,item,shop,category,mode,amount FROM rough")
+    cursor.execute("SELECT DATE_FORMAT(date, '%d/%m/%Y') AS formatted_date,item, shop, category, mode, amount FROM rough ORDER BY date;")
     result=cursor.fetchall()
     cursor.execute("SELECT SUM(amount) FROM rough")
     tot=cursor.fetchone()
