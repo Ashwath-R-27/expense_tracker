@@ -8,6 +8,7 @@ body{
     background-color: rgb(247, 251, 255);
     margin: 0;
     font-family: sans-serif;
+    padding-top: 60px;
 }
 
 .header {
@@ -15,6 +16,12 @@ body{
     background-color: var(--color--log);
     color: white;
     padding: 5px;
+
+    position: fixed;   /* makes it stick */
+    top: 0;            /* stick to top */
+    left: 0;
+    width: 100%;       /* full width */
+    z-index: 1000;
 }
 
 .header h2 {

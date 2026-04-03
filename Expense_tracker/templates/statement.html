@@ -23,6 +23,7 @@
                         <th>AMOUNT</th>
                     </tr>
                 </thead>
+                <div class="st_tbody">
                 <tbody>
                     {% for i in result %}
                     <tr>
@@ -34,7 +35,15 @@
                         <td>₹ {{ i[5] }}</td>
                     </tr>
                     {% endfor %}
+                    <div class="total">
+                    <tr style="height: 40px;">
+                        <td></td>
+                        <td colspan="4" style="text-align: right; padding-right: 25px;font-size: 17px;">TOTAL:</td>
+                        <td style="font-size: 17px;">₹ {{ total }}</td>
+                    </tr>
+                    </div>
                 </tbody>
+                </div>
             </table>
         </div>
     </div>

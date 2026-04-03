@@ -39,10 +39,13 @@ def entrypg():
 @app.route("/dashboard/statement")
 def statement():
     con=get_db()
-    cur=con.cursor()
-    cur.execute("SELECT DATE_FORMAT(date, '%d/%m/%Y') AS date,item,shop,category,mode,amount FROM rough")
-    result=cur.fetchall()
-    return render_template("statement.html",result=result)
+    cursor=con.cursor()
+    cursor.execute("SELECT DATE_FORMAT(date, '%d/%m/%Y') AS date,item,shop,category,mode,amount FROM rough")
+    result=cursor.fetchall()
+    cursor.execute("SELECT SUM(amount) FROM rough")
+    tot=cursor.fetchone()
+    con.close()
+    return render_template("statement.html",result=result,total=tot[0])
 
 @app.route("/submit_expenses", methods=["POST"])
 def submit_expenses():
