@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request,redirect,url_for, jsonify
 import mysql.connector
 from datetime import datetime
 from datetime import date, timedelta
@@ -27,8 +27,35 @@ def get_db():
     )
 
 @app.route("/")
+def first():
+    return redirect(url_for("login"))
+
+@app.route("/login")
 def login():
     return render_template("login.html")
+
+def get_total(cursor, table_name):
+    cursor.execute(f"SELECT COALESCE(SUM(amount), 0) FROM {table_name}")
+    result = cursor.fetchone()
+    return float(result[0] or 0)
+
+@app.route("/dashboard")
+def dashboard():
+
+    con = get_db()
+    cursor = con.cursor()
+
+    total_expense = get_total(cursor, "rough")
+    total_income = get_total(cursor, "income")
+
+    con.close()
+
+    return render_template(
+        "dashboard.html",
+        total_expense=total_expense,
+        total_income=total_income,
+        balance=total_income - total_expense
+    )
 
 @app.route("/dashboard/expenseentry")
 def entrypg():

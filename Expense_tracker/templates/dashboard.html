@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+  <header class="dashboard-topbar">
+    <div>
+      <p class="eyebrow">Expense Tracker</p>
+      <h1>Dashboard</h1>
+      <p class="subline">Choose a section below to open expense entry, income entry, or statements.</p>
+    </div>
+    <a href="#" class="account-btn">Account</a>
+  </header>
+
+  <main class="dashboard-shell">
+    <section class="stats-row">
+      <article class="stat-card income">
+        <span>Total Income</span>
+        <h2>₹ {{ '%.2f'|format(total_income or 0) }}</h2>
+      </article>
+      <article class="stat-card expense">
+        <span>Total Expense</span>
+        <h2>₹ {{ '%.2f'|format(total_expense or 0) }}</h2>
+      </article>
+      <article class="stat-card balance">
+        <span>Balance</span>
+        <h2>₹ {{ '%.2f'|format(balance or 0) }}</h2>
+      </article>
+    </section>
+
+    <section class="feature-grid cards-only-grid">
+      <a href="/dashboard/expenseentry" class="feature-card compact-card">
+        <div class="feature-title">Expense Entry</div>
+        <div class="feature-visual expense-visual">
+          <div class="shape card-shape"></div>
+          <div class="shape circle one"></div>
+          <div class="shape circle two"></div>
+          <div class="shape line one"></div>
+          <div class="shape line two"></div>
+          <div class="shape coin"></div>
+        </div>
+        <div class="feature-footer">Open the expense entry page.</div>
+      </a>
+
+      <a href="#" class="feature-card compact-card">
+        <div class="feature-title">Income Entry</div>
+        <div class="feature-visual income-visual">
+          <div class="shape wallet"></div>
+          <div class="shape rupee-bar one"></div>
+          <div class="shape rupee-bar two"></div>
+          <div class="shape rupee-bar three"></div>
+          <div class="shape rise-arrow"></div>
+        </div>
+        <div class="feature-footer">Open the income entry page.</div>
+      </a>
+
+      <a href="/dashboard/statement" class="feature-card compact-card">
+        <div class="feature-title">Statement</div>
+        <div class="feature-visual statement-visual">
+          <div class="shape paper"></div>
+          <div class="shape row one"></div>
+          <div class="shape row two"></div>
+          <div class="shape row three"></div>
+          <div class="shape pie"></div>
+        </div>
+        <div class="feature-footer">Open the statement history page.</div>
+      </a>
+    </section>
+  </main>
+</body>
+</html>
