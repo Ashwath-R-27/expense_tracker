@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static',filename='statement.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Statement</title>
 </head>
 <body>
@@ -51,9 +52,39 @@
                 </tr>
             </tbody>
         </table>
+     </div>
     </div>
+    <hr>
+    <div class="compcont">
+        <div class="catcomp">
+            <h3>Category wise Comparison</h3>
+            <div id="barChart" style="width:100%; height:400px;"></div>
+        </div>
+    </div>
+    </div>
+    <script>
+    const labels = {{ labels | tojson | safe }};
+    const values = {{ values | tojson | safe }};
 
-</div>
-    </div>
+    console.log(labels, values);  // debug
+
+    if (labels.length > 0) {
+        const data = [{
+            x: labels,
+            y: values,
+            type: 'bar'
+        }];
+
+        const layout = {
+            title: "Expenses by Category",
+            xaxis: { title: "Category" },
+            yaxis: { title: "Amount (₹)" }
+        };
+
+        Plotly.newPlot('barChart', data, layout);
+    } else {
+        document.getElementById("barChart").innerHTML = "No data available";
+    }
+</script>
 </body>
 </html>

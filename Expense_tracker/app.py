@@ -36,16 +36,61 @@ def entrypg():
     least = today - timedelta(days=3)
     return render_template("entry.html",least=least,present=today)
 
+from collections import defaultdict
+
 @app.route("/dashboard/statement")
 def statement():
-    con=get_db()
-    cursor=con.cursor()
-    cursor.execute("SELECT DATE_FORMAT(date, '%d/%m/%Y') AS formatted_date,item, shop, category, mode, amount FROM rough ORDER BY date;")
-    result=cursor.fetchall()
+    con = get_db()
+    cursor = con.cursor()
+
+    cursor.execute("""
+        SELECT DATE_FORMAT(date, '%d/%m/%Y'),
+               item, shop, category, mode, amount 
+        FROM rough ORDER BY date;
+    """)
+    result = cursor.fetchall()
+
     cursor.execute("SELECT SUM(amount) FROM rough")
-    tot=cursor.fetchone()
+    tot = cursor.fetchone()
+
+    # ✅ Category grouping (IMPORTANT: your DB stores UPPERCASE)
+    CATEGORY_MAP = {
+        "Food & Dining": ["GROCERIES", "SNACKS", "TEA / COFFEE", "MEAT(CHICKEN/MUTTON/FISH)", "HOTEL"],
+        "Transport": ["PETROL / FUEL", "TRANSPORT", "TAXI / AUTO", "BUS / TRAIN"],
+        "Bills & Utilities": ["MOBILE RECHARGE", "INTERNET BILL", "ELECTRICITY BILL", "WATER BILL", "RENT"],
+        "Shopping": ["ONLINE SHOPPING", "CLOTHING", "ELECTRONICS"],
+        "Health & Personal": ["MEDICAL / PHARMACY", "HOSPITAL", "PERSONAL CARE", "GYM / FITNESS"],
+        "Others": ["ATM WITHDRAWAL", "INTERNET BANKING", "EDUCATION", "STATIONERY",
+                   "ENTERTAINMENT", "MOVIE", "SUBSCRIPTION", "TRAVEL", "GIFT", "MAINTENANCE", "OTHER"]
+    }
+
+    def simplify_category(cat):
+        cat = cat.strip().upper()
+        for key, values in CATEGORY_MAP.items():
+            if cat in values:
+                return key
+        return "Others"
+
+    # ✅ Calculate totals
+    category_totals = defaultdict(float)
+
+    for row in result:
+        category = simplify_category(row[3])
+        amount = float(row[5])
+        category_totals[category] += amount
+
+    labels = list(category_totals.keys())
+    values = list(category_totals.values())
+
     con.close()
-    return render_template("statement.html",result=result,total=tot[0])
+
+    return render_template(
+        "statement.html",
+        result=result,
+        total=tot[0],
+        labels=labels,
+        values=values
+    )
 
 @app.route("/submit_expenses", methods=["POST"])
 def submit_expenses():

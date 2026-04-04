@@ -119,6 +119,16 @@ th {
     text-align: center;
 }
 
+hr {
+    margin-top: 2%;
+}
+
+.compcont {
+    margin: 1%;
+    padding: 8px;
+    text-align: center;
+}
+
 @media screen and (max-width: 850px){
 
     .header h2 {
