@@ -60,6 +60,11 @@
             <h3>Category wise Comparison</h3>
             <div id="barChart" style="width:100%; height:400px;"></div>
         </div>
+    <hr>
+        <div class="paycomp">
+            <h3>Mode of Payment</h3>
+            <div id="pieChart" style="width:100%; height:400px;"></div>
+        </div>
     </div>
     </div>
     <script>
@@ -84,6 +89,35 @@
         Plotly.newPlot('barChart', data, layout);
     } else {
         document.getElementById("barChart").innerHTML = "No data available";
+    }
+</script>
+<script>
+    const payLabels = {{ pay_labels | tojson | safe }};
+    const payValues = {{ pay_values | tojson | safe }};
+
+    console.log("Payment:", payLabels, payValues);
+
+    if (payLabels.length > 0) {
+        const pieData = [{
+            labels: payLabels,
+            values: payValues,
+            type: 'pie',
+            hole: 0,   // 🔥 makes it donut style (optional)
+            textinfo: "label+percent",
+            marker: {
+                colors: [
+                    "#003d5c","#ff5f66","#ffa600","#594e90","#bc4c96"
+                ]
+            }
+        }];
+
+        const pieLayout = {
+            title: "Mode of Payment Distribution",
+        };
+
+        Plotly.newPlot('pieChart', pieData, pieLayout);
+    } else {
+        document.getElementById("pieChart").innerHTML = "No data available";
     }
 </script>
 </body>

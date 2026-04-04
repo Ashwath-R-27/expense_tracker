@@ -30,7 +30,7 @@ def get_db():
 def login():
     return render_template("login.html")
 
-@app.route("/entry")
+@app.route("/dashboard/expenseentry")
 def entrypg():
     today = date.today()
     least = today - timedelta(days=3)
@@ -82,15 +82,28 @@ def statement():
     labels = list(category_totals.keys())
     values = list(category_totals.values())
 
+    # ✅ Mode of payment totals
+    payment_totals = defaultdict(float)
+
+    for row in result:
+        mode = row[4].strip().upper()
+        amount = float(row[5])
+        payment_totals[mode] += amount
+
+    pay_labels = list(payment_totals.keys())
+    pay_values = list(payment_totals.values())
+
     con.close()
 
     return render_template(
-        "statement.html",
-        result=result,
-        total=tot[0],
-        labels=labels,
-        values=values
-    )
+    "statement.html",
+    result=result,
+    total=tot[0],
+    labels=labels,
+    values=values,
+    pay_labels=pay_labels,
+    pay_values=pay_values
+)
 
 @app.route("/submit_expenses", methods=["POST"])
 def submit_expenses():
