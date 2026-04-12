@@ -36,6 +36,31 @@ body{
     padding: 2%;
 }
 
+.export_btn {
+    margin: 1px;
+    padding: 1% 2%;
+    width: 95%;
+    text-align: right;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.export_btn button {
+    border: none;
+    border-radius: 10px;
+    padding: 0.4%;
+    width: 10%;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(26, 148, 156);
+}
+
+.export_btn button:hover{
+    background-color: rgb(19, 114, 121);
+}
+
 .st_table {
     width: 95%;
     margin-top: 10px;
@@ -133,6 +158,11 @@ hr {
 
     .header h2 {
         font-size: 12px;
+    }
+
+    .export_btn button {
+        font-size: 10px;
+        width: 20%;
     }
 
     .st_table table td {

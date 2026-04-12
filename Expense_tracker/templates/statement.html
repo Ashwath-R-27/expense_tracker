@@ -12,6 +12,11 @@
         <h2>EXPENSE TRACKER</h2>
     </div>
     <div class="content">
+    <div class="export_btn">
+        <a href="/export/excel">
+        <button>Download</button>
+        </a>
+    </div>
         <div class="st_table">
 
     <!-- Fixed Header Table -->
@@ -68,60 +73,11 @@
     </div>
     </div>
     <script>
-    const labels = {{ labels | tojson | safe }};
-    const values = {{ values | tojson | safe }};
-
-    console.log(labels, values);  // debug
-
-    if (labels.length > 0) {
-        const data = [{
-            x: labels,
-            y: values,
-            type: 'bar',
-            marker: {
-        color: "#06bd5e"
-    }
-        }];
-
-        const layout = {
-            title: "Expenses by Category",
-            xaxis: { title: "Category" },
-            yaxis: { title: "Amount (₹)" }
-        };
-
-        Plotly.newPlot('barChart', data, layout, { responsive: true });
-    } else {
-        document.getElementById("barChart").innerHTML = "No data available";
-    }
-</script>
-<script>
-    const payLabels = {{ pay_labels | tojson | safe }};
-    const payValues = {{ pay_values | tojson | safe }};
-
-    console.log("Payment:", payLabels, payValues);
-
-    if (payLabels.length > 0) {
-        const pieData = [{
-            labels: payLabels,
-            values: payValues,
-            type: 'pie',
-            hole: 0,   // 🔥 makes it donut style (optional)
-            textinfo: "label+percent",
-            marker: {
-                colors: [
-                    "#003d5c","#ff5f66","#ffa600","#594e90","#bc4c96"
-                ]
-            }
-        }];
-
-        const pieLayout = {
-            title: "Mode of Payment Distribution",
-        };
-
-        Plotly.newPlot('pieChart', pieData, pieLayout, { responsive: true });
-    } else {
-        document.getElementById("pieChart").innerHTML = "No data available";
-    }
-</script>
+        window.labels = {{ labels | tojson | safe }};
+        window.values = {{ values | tojson | safe }};
+        window.pay_labels = {{ pay_labels | tojson | safe }};
+        window.pay_values = {{ pay_values | tojson | safe }};
+    </script>
+<script src="{{ url_for('static', filename='stats.js') }}"></script>
 </body>
 </html>

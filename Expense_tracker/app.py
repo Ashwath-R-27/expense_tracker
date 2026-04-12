@@ -1,30 +1,13 @@
 from flask import Flask, render_template, request,redirect,url_for, jsonify
-import mysql.connector
-from datetime import datetime
 from datetime import date, timedelta
-from flask_mail import Mail, Message
-import bcrypt
+from statement import statement_bp
+from mailing import mailing_bp
+from db import get_db
 
 app = Flask(__name__)
 
-def send_email():
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USERNAME'] = 'ashwathr27100@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'uzpg hgap bcfh hwki'  # NOT your Gmail password
-    app.config['MAIL_DEFAULT_SENDER'] = 'ashwathr27100@gmail.com'
-
-    mail = Mail(app)
-    return mail
-
-def get_db():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="ashwath@2008",
-        database="expenses"
-    )
+app.register_blueprint(statement_bp)
+app.register_blueprint(mailing_bp)
 
 @app.route("/")
 def first():
@@ -63,74 +46,9 @@ def entrypg():
     least = today - timedelta(days=3)
     return render_template("entry.html",least=least,present=today)
 
-from collections import defaultdict
-
-@app.route("/dashboard/statement")
-def statement():
-    con = get_db()
-    cursor = con.cursor()
-
-    cursor.execute("""
-        SELECT DATE_FORMAT(date, '%d/%m/%Y'),
-               item, shop, category, mode, amount 
-        FROM rough ORDER BY date;
-    """)
-    result = cursor.fetchall()
-
-    cursor.execute("SELECT SUM(amount) FROM rough")
-    tot = cursor.fetchone()
-
-    # ✅ Category grouping (IMPORTANT: your DB stores UPPERCASE)
-    CATEGORY_MAP = {
-        "Food & Dining": ["GROCERIES", "SNACKS", "TEA / COFFEE", "MEAT(CHICKEN/MUTTON/FISH)", "HOTEL"],
-        "Transport": ["PETROL / FUEL", "TRANSPORT", "TAXI / AUTO", "BUS / TRAIN"],
-        "Bills & Utilities": ["MOBILE RECHARGE", "INTERNET BILL", "ELECTRICITY BILL", "WATER BILL", "RENT"],
-        "Shopping": ["ONLINE SHOPPING", "CLOTHING", "ELECTRONICS"],
-        "Health & Personal": ["MEDICAL / PHARMACY", "HOSPITAL", "PERSONAL CARE", "GYM / FITNESS"],
-        "Others": ["ATM WITHDRAWAL", "INTERNET BANKING", "EDUCATION", "STATIONERY",
-                   "ENTERTAINMENT", "MOVIE", "SUBSCRIPTION", "TRAVEL", "GIFT", "MAINTENANCE", "OTHER"]
-    }
-
-    def simplify_category(cat):
-        cat = cat.strip().upper()
-        for key, values in CATEGORY_MAP.items():
-            if cat in values:
-                return key
-        return "Others"
-
-    # ✅ Calculate totals
-    category_totals = defaultdict(float)
-
-    for row in result:
-        category = simplify_category(row[3])
-        amount = float(row[5])
-        category_totals[category] += amount
-
-    labels = list(category_totals.keys())
-    values = list(category_totals.values())
-
-    # ✅ Mode of payment totals
-    payment_totals = defaultdict(float)
-
-    for row in result:
-        mode = row[4].strip().upper()
-        amount = float(row[5])
-        payment_totals[mode] += amount
-
-    pay_labels = list(payment_totals.keys())
-    pay_values = list(payment_totals.values())
-
-    con.close()
-
-    return render_template(
-    "statement.html",
-    result=result,
-    total=tot[0],
-    labels=labels,
-    values=values,
-    pay_labels=pay_labels,
-    pay_values=pay_values
-)
+@app.route("/dashboard/expenseentry/submitted")
+def submitted():
+    return render_template('entry.html',status='success')
 
 @app.route("/submit_expenses", methods=["POST"])
 def submit_expenses():
@@ -162,7 +80,7 @@ def submit_expenses():
     cursor.close()
     db.close()
 
-    return "Expenses saved successfully!"
+    return redirect(url_for("submitted"))
 
 if __name__ == '__main__':
     app.run(debug=True)
